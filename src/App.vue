@@ -8,8 +8,9 @@
 <script>
 import { ref, provide } from 'vue'
 import { onAuthStateChanged, signOut } from '@firebase/auth'
-import { auth } from './firebase'
+import { auth, db } from './firebase'
 import TheNavbar from './components/TheNavbar.vue'
+import { doc, updateDoc } from '@firebase/firestore'
 export default {
   components: { TheNavbar },
   setup () {
@@ -23,6 +24,9 @@ export default {
 
     const logout = async () => {
       try {
+        await updateDoc(doc(db, 'users', userState.value.uid), {
+          state: false
+        })
         await signOut(auth)
       } catch (error) {
         console.log(error)
@@ -44,15 +48,25 @@ html {
   margin: 0;
 }
 body {
-  min-height: 100vh;
   background-repeat: no-repeat;
   font-family: 'Poppins', sans-serif;
+  /* background-color: #1a1e25;
+  color: #fff; */
+}
+#app {
+  height: 100vh;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 .container {
-  padding: 30px 15px;
-  max-width: 1040px;
+  padding: 0 40px;
+  width: 1040px;
   margin: auto;
-
+  min-height: calc(100vh - 64px);
+  height: calc(100vh - 64px);
 }
 .title {
   font-size: 30px;

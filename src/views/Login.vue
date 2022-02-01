@@ -12,10 +12,11 @@
 </template>
 
 <script>
-import { useRouter } from 'vue-router'
 import { ref, inject } from 'vue'
+import { useRouter } from 'vue-router'
 import { signInWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../firebase'
+import { doc, updateDoc } from 'firebase/firestore'
+import { auth, db } from '../firebase'
 
 export default {
   setup () {
@@ -29,6 +30,10 @@ export default {
       try {
         // LOGIN
         await signInWithEmailAndPassword(auth, email.value, password.value)
+
+        await updateDoc(doc(db, 'users', userState.value.uid), {
+          state: true
+        })
         email.value = ''
         password.value = ''
         router.push('/chat')
