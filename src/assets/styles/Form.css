@@ -1,0 +1,43 @@
+.title {
+    font-size: 30px;
+    line-height: 37px;
+    margin-bottom: 5px;
+}
+.msg {
+    font-size: 18px;
+    margin-bottom: 22px;
+}
+.form {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+}
+.form-label {
+    margin-bottom: 8px;
+}
+.form-control {
+    font-size: 16px;
+    width: 90%;
+    padding: 12px 20px;
+    border-radius: 13px;
+    border: 1px solid #00000017;
+    outline: none;
+    background-color: #e1e2e5;
+    margin-bottom: 15px;
+}
+.form-control:last-of-type {
+    margin-bottom: 25px;
+}
+.link-account {
+    display: block;
+    margin-top: 30px;
+    color: #242424;
+    text-decoration: none;
+}
+.link-account span {
+    color: blue;
+}
+.link-account span:hover {
+    text-decoration: underline;
+}
