@@ -1,27 +1,29 @@
 <template>
   <nav id="nav">
     <div class="nav__container">
-        <router-link to="/" class="nav__title">
-        {{
-            userState
-            ? userState.displayName || userState.email
-            : 'Chat App'
-        }}
-        </router-link>
+        <a href="#!" class="btn-nav profile">
+            <img src="../assets/Profile.svg" alt="Profile svg" title="Profile">
+        </a>
         <ul class="nav__menu">
-            <li class="nav-item" v-if="!userState">
-                <router-link to="/login" class="nav__menu__link">LogIn</router-link>
+            <li class="nav-item">
+                <router-link to="/" class="btn-nav home">
+                    <img src="../assets/Home.svg" alt="Home svg" title="Home">
+                </router-link>
             </li>
             <li class="nav-item" v-if="!userState">
-                <router-link to="/register" class="nav__menu__link">Register</router-link>
-            </li>
-            <li class="nav-item" v-if="userState">
-                <router-link to="chat" class="btn-chat">
-                    <span>Chat</span>
+                <router-link to="/chat" class="btn-nav chat">
+                    <img src="../assets/Login.svg" alt="Login svg" title="Login">
                 </router-link>
             </li>
             <li class="nav-item" v-if="userState">
-                <button @click="logout" class="btn btn-logout">Logout</button>
+                <router-link to="/chat" class="btn-nav chat">
+                    <img src="../assets/Chat.svg" alt="Chat svg" title="Chat">
+                </router-link>
+            </li>
+            <li class="nav-item" v-if="userState">
+                <a href="#!" class="btn-nav logout">
+                    <img src="../assets/Logout.svg" alt="Logout svg" @click="logout" class="btn-logout" title="Logout" />
+                </a>
             </li>
         </ul>
     </div>
@@ -38,71 +40,55 @@ export default {
 #nav {
     background-color: #1f2633;
     color: #fff;
-    padding: 14px 15px;
+    height: 100%;
 }
 .nav__container {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    max-width: 1040px;
+    /* max-width: 1040px; */
+    padding: 40px 14px;
     margin: auto;
-}
-.nav__title {
-    font-size: 20px;
-    color: #fff;
-    text-decoration: none;
 }
 .nav__menu {
     display: flex;
+    justify-content: center;
     align-items: center;
+    flex-direction: column;
     list-style: none;
-    column-gap: 16px;
+    row-gap: 30px;
 }
-.nav__menu__link {
-    color: #fff;
-    text-decoration: none;
-    font-weight: 300;
-}
-.btn-logout {
-    padding: 8px 25px !important;
-    background-image: linear-gradient(135deg, #f34079 40%, #fc894d) !important;
-    margin-left: 15px;
-    cursor: pointer;
-    box-shadow: 0 0 10px #f44c72;
-}
-.btn-chat {
-    width: 100px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.btn-nav img {
     position: relative;
-    background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
-    border-radius: 20px;
-    box-shadow: 0 0 10px #7a4bd8c7;
-    margin-left: 7px;
-}
-.btn-chat span {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
-    text-decoration: none;
-    background-color: #1f2633;
-    position: absolute;
-    width: calc(100% - 4px);
-    height: calc(100% - 4px);
-    inset: 0;
-    border-radius: 20px;
-    margin: auto;
-    transition: 0.4s;
+    height: 50px;
+    padding: 10px;
+    border-radius: 50%;
+    object-fit: cover;
 }
-.btn-chat span:hover {
-    background-color: transparent;
+.profile {
+    margin-bottom: 50px;
+    padding-bottom: 50px;
+    border-bottom: 2px solid #343d4d;
 }
-@media (max-width: 540px) {
-    .nav__menu {
-        display: none;
-    }
+/* Background */
+.profile img {
+    background-image: linear-gradient(315deg,#8243ff,#ff0032);
+    box-shadow: 0 0 25px #cc1b85;
+}
+.home img {
+    background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
+    box-shadow: 0 0 15px #7a4bd8c7;
+}
+.chat img {
+    background-image: linear-gradient(315deg,#3ed500,#00c7ff);
+    box-shadow: 0 0 15px #1fce80;
+}
+.logout img {
+    background-image: linear-gradient(135deg, #f34079 40%, #fc894d);
+    box-shadow: 0 0 15px #f44c72;
 }
 </style>
