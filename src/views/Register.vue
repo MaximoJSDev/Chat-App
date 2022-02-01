@@ -4,7 +4,7 @@
     <label for="email" class="form-label">Email: </label>
     <input type="email" v-model="email" class="form-control">
     <label for="text" class="form-label">Username: </label>
-    <input type="text" class="form-control">
+    <input type="text" v-model="username" class="form-control">
     <label for="password" class="form-label">Password: </label>
     <input type="password" v-model="password" class="form-control">
     <button class="btn btn-primary">Register</button>
@@ -15,22 +15,30 @@
 <script>
 import { ref } from '@vue/reactivity'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../firebase'
-import { inject } from '@vue/runtime-core'
+import { doc, setDoc } from 'firebase/firestore'
+import { auth, db } from '../firebase'
 import { useRouter } from 'vue-router'
 
 export default {
   setup () {
     const email = ref('')
+    const username = ref('')
     const password = ref('')
-    const userState = inject('userState')
     const router = useRouter()
 
     const processForm = async () => {
       if (!email.value.trim() && !password.value.trim()) return
       try {
         // REGISTER
-        await createUserWithEmailAndPassword(auth, email.value, password.value)
+        const userCreated = await createUserWithEmailAndPassword(auth, email.value, password.value)
+        // Add a new document in collection "cities"
+        await setDoc(doc(db, 'users', userCreated.user.uid), {
+          username: username.value,
+          email: userCreated.user.email,
+          state: true,
+          uid: userCreated.user.uid
+        })
+
         email.value = ''
         password.value = ''
         router.push('/chat')
@@ -39,7 +47,7 @@ export default {
       }
     }
 
-    return { email, password, processForm, userState }
+    return { email, username, password, processForm }
   }
 }
 </script>
