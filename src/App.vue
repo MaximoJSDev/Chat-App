@@ -1,5 +1,6 @@
 <template>
   <TheNavbar :userState="userState" :logout="logout" />
+  <TheHeader :userState="userState" />
   <main class="container">
     <router-view />
   </main>
@@ -11,8 +12,9 @@ import { onAuthStateChanged, signOut } from '@firebase/auth'
 import { auth, db } from './firebase'
 import TheNavbar from './components/TheNavbar.vue'
 import { doc, updateDoc } from '@firebase/firestore'
+import TheHeader from './components/TheHeader.vue'
 export default {
-  components: { TheNavbar },
+  components: { TheNavbar, TheHeader },
   setup () {
     const userState = ref(auth.currentUser)
 
@@ -48,25 +50,42 @@ html {
   margin: 0;
 }
 body {
-  background-repeat: no-repeat;
   font-family: 'Poppins', sans-serif;
-  /* background-color: #1a1e25;
-  color: #fff; */
+  background-color: #ebecf2;
+}
+body.dark-mode {
+  background-color: #1a1e25;
+  color: #fff;
 }
 #app {
   height: 100vh;
   min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  display: grid;
+  grid-template-areas:
+    'nav head head'
+    'nav main main';
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 .container {
-  padding: 0 40px;
-  width: 1040px;
+  height: calc(100vh - 70px);
+  min-height: calc(100vh - 70px);
+  width: 100%;
+  padding: 32px;
+  grid-area: main;
+}
+.max-width {
+  position: relative;
+  max-width: 870px;
+  min-height: 523px;
   margin: auto;
-  min-height: calc(100vh - 64px);
-  height: calc(100vh - 64px);
+  margin-top: 20px;
+  padding: 35px;
+  border-radius: 20px;
+  background-color: #fff;
+}
+body.dark-mode .max-width {
+  background-color: #1f2633;
 }
 .title {
   font-size: 30px;
@@ -96,4 +115,33 @@ body {
   opacity: 0.65;
   z-index: -1;
 }
+
+@media (max-width: 840px) {
+  .header {
+    width: 100vw;
+  }
+  .header__title {
+    font-size: 24px;
+  }
+  #nav {
+    display: none;
+  }
+  .container {
+    padding: 20px;
+  }
+  .max-width {
+    margin-top: 0;
+    padding: 25px;
+  }
+  .lorem {
+    font-size: 15px;
+  }
+  .btn-to-chat {
+    display: inline-block;
+    position: relative;
+    bottom: 0;
+    margin-bottom: 5px;
+  }
+}
+@import './assets/styles/Form.css';
 </style>
