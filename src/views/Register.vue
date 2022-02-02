@@ -1,15 +1,17 @@
 <template>
-  <h1 class="title">Create an account</h1>
-  <form @submit.prevent="processForm" class="form">
-    <label for="email" class="form-label">Email: </label>
-    <input type="email" v-model="email" class="form-control">
-    <label for="text" class="form-label">Username: </label>
-    <input type="text" v-model="username" class="form-control">
-    <label for="password" class="form-label">Password: </label>
-    <input type="password" v-model="password" class="form-control">
-    <button class="btn btn-primary">Register</button>
-  </form>
-  <router-link to="/login" class="link-account">Already have an account?</router-link>
+  <div class="max-width">
+    <h1 class="title title-register">Create an account</h1>
+    <form @submit.prevent="processForm" class="form">
+      <label for="email" class="form-label">Email: </label>
+      <input type="email" v-model="email" class="form-control">
+      <label for="text" class="form-label">Username: </label>
+      <input type="text" v-model="username" class="form-control">
+      <label for="password" class="form-label">Password: </label>
+      <input type="password" v-model="password" class="form-control">
+      <button class="btn btn-primary">Register</button>
+    </form>
+    <router-link to="/login" class="link-account">Already have an account?</router-link>
+  </div>
 </template>
 
 <script>
@@ -51,6 +53,3 @@ export default {
   }
 }
 </script>
-<style>
-  @import '../assets/styles/Form.css';
-</style>

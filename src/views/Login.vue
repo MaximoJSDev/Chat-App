@@ -1,14 +1,16 @@
 <template>
-  <h1 class="title">Welcome back!</h1>
-  <p class="msg">We're so excited to see you again!</p>
-  <form @submit.prevent="processForm" class="form">
-    <label for="email" class="form-label">Email: </label>
-    <input type="email" v-model="email" class="form-control">
-    <label for="password" class="form-label">Password: </label>
-    <input type="password" v-model="password" class="form-control">
-    <button class="btn btn-primary">Login</button>
-  </form>
-  <router-link to="/register" class="link-account">Need an account? <span>Register</span></router-link>
+  <div class="max-width">
+    <h1 class="title">Welcome back!</h1>
+    <p class="msg">We're so excited to see you again!</p>
+    <form @submit.prevent="processForm" class="form">
+      <label for="email" class="form-label">Email: </label>
+      <input type="email" v-model="email" class="form-control">
+      <label for="password" class="form-label">Password: </label>
+      <input type="password" v-model="password" class="form-control">
+      <button class="btn btn-primary">Login</button>
+    </form>
+    <router-link to="/register" class="link-account">Need an account? <span>Register</span></router-link>
+  </div>
 </template>
 
 <script>
@@ -46,6 +48,3 @@ export default {
   }
 }
 </script>
-<style>
-  @import '../assets/styles/Form.css';
-</style>
