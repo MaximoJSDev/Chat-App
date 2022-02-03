@@ -10,25 +10,25 @@
                     <img src="../assets/Home.svg" alt="Home icon" title="Home">
                 </router-link>
             </li>
-            <li class="nav-item" v-if="!userState">
+            <li class="nav-item" v-if="!myUser">
                 <router-link to="/login" class="btn-nav chat">
                     <img src="../assets/Login.svg" alt="Login icon" title="Login">
                 </router-link>
             </li>
-            <li class="nav-item" v-if="userState">
+            <li class="nav-item" v-if="myUser">
                 <router-link to="/chat" class="btn-nav chat">
                     <img src="../assets/Chat.svg" alt="Chat icon" title="Chat">
                 </router-link>
             </li>
-            <li class="nav-item" v-if="userState">
+            <li class="nav-item" v-if="myUser">
                 <div class="btn-nav logout">
                     <img src="../assets/Logout.svg" alt="Logout icon" @click="logout" class="btn-logout" title="Logout" />
                 </div>
             </li>
         </ul>
         <div class="ico dark-light">
-            <img src="../assets/Moon.svg" alt="Logout icon" title="Logout" />
-            <img src="../assets/Sun.svg" alt="Logout icon" title="Logout" />
+            <img src="../assets/Moon.svg" alt="Logout icon" title="Logout" @click="toggleTheme(false)" />
+            <img src="../assets/Sun.svg" alt="Logout icon" title="Logout" @click="toggleTheme(true)" />
         </div>
     </div>
   </nav>
@@ -36,7 +36,18 @@
 
 <script>
 export default {
-  props: ['userState', 'logout']
+  props: ['myUser', 'logout'],
+  setup () {
+    const toggleTheme = (isDark) => {
+      console.log(isDark)
+      if (isDark) {
+        return document.body.classList.remove('dark-mode')
+      }
+      document.body.classList.add('dark-mode')
+    }
+
+    return { toggleTheme }
+  }
 }
 </script>
 
@@ -54,7 +65,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     /* max-width: 1040px; */
-    padding: 17px 14px 36px;
+    padding: 17px 12px 36px;
     height: 100%;
     margin: auto;
 }
