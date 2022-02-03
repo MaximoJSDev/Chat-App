@@ -1,6 +1,6 @@
 <template>
-  <TheNavbar :userState="userState" :logout="logout" />
-  <TheHeader :userState="userState" />
+  <TheNavbar :myUser="myUser" :logout="logout" />
+  <TheHeader :myUser="myUser" />
   <main class="container">
     <router-view />
   </main>
@@ -16,17 +16,17 @@ import TheHeader from './components/TheHeader.vue'
 export default {
   components: { TheNavbar, TheHeader },
   setup () {
-    const userState = ref(auth.currentUser)
+    const myUser = ref(auth.currentUser)
 
     // Si el estado del usuario cambia...
     onAuthStateChanged(auth, (user) => {
-      userState.value = user
+      myUser.value = user
     })
-    provide('userState', userState)
+    provide('myUser', myUser)
 
     const logout = async () => {
       try {
-        await updateDoc(doc(db, 'users', userState.value.uid), {
+        await updateDoc(doc(db, 'users', myUser.value.uid), {
           state: false
         })
         await signOut(auth)
@@ -35,7 +35,7 @@ export default {
       }
     }
 
-    return { userState, logout }
+    return { myUser, logout }
   }
 }
 </script>

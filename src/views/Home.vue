@@ -1,7 +1,7 @@
 <template>
   <div class="max-width">
     <h1 class="title-home">Welcome to Home
-      {{userState ? userState.displayName || userState.email :'User'}}!
+      {{myUser ? myUser.displayName || myUser.email :'User'}}!
     </h1>
     <p class="lorem">
       Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non, illo.
@@ -21,9 +21,9 @@ import { inject } from 'vue'
 export default {
   name: 'Home',
   setup () {
-    const userState = inject('userState')
+    const myUser = inject('myUser')
 
-    return { userState }
+    return { myUser }
   }
 }
 </script>

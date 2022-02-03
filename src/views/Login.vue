@@ -24,7 +24,7 @@ export default {
   setup () {
     const email = ref('')
     const password = ref('')
-    const userState = inject('userState')
+    const myUser = inject('myUser')
     const router = useRouter()
 
     const processForm = async () => {
@@ -33,7 +33,7 @@ export default {
         // LOGIN
         await signInWithEmailAndPassword(auth, email.value, password.value)
 
-        await updateDoc(doc(db, 'users', userState.value.uid), {
+        await updateDoc(doc(db, 'users', myUser.value.uid), {
           state: true
         })
         email.value = ''
@@ -44,7 +44,7 @@ export default {
       }
     }
 
-    return { email, password, processForm, userState }
+    return { email, password, processForm, myUser }
   }
 }
 </script>
