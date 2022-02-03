@@ -33,7 +33,7 @@ export default {
       try {
         // REGISTER
         const userCreated = await createUserWithEmailAndPassword(auth, email.value, password.value)
-        // Add a new document in collection "cities"
+        // Add a new document in collection "users"
         await setDoc(doc(db, 'users', userCreated.user.uid), {
           username: username.value,
           email: userCreated.user.email,

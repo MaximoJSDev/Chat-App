@@ -1,14 +1,16 @@
 <template>
   <div
-    v-for="user in users"
+    v-for="user in getRegisteredUsersWithoutMe"
     :key="user.uid"
     :class="user.state ? 'connected-user user' : 'offline-user user'"
+    :data-uid="user.uid"
+    @click="getChatUser(user.uid)"
   >
-  <div class="btn-nav profile">
-    <img src="../assets/Profile.svg" alt="Image user">
+  <div class="btn-nav profile" >
+    <img src="../assets/Profile.svg" alt="User icon">
   </div>
     <div>
-      <h6 class="user__title">{{user.username || user.email}}</h6>
+      <h6 class="user__title">{{user.username}}</h6>
       <p class="user__msg">Why not? Say hello!</p>
     </div>
       <span class="user__time">09:00</span>
@@ -16,42 +18,59 @@
 </template>
 
 <script>
+import { computed, inject, ref } from 'vue'
 import { collection, onSnapshot, query } from 'firebase/firestore'
 import { db } from '../firebase'
-import { ref } from 'vue'
+
 export default {
   setup () {
-    const users = ref([])
+    const registeredUsers = ref([])
+    const myUserNAME = inject('myUserNAME')
+    const selectedUserID = inject('selectedUserID')
+    const myUser = inject('myUser')
     const q = query(collection(db, 'users'))
 
     onSnapshot(q, (snapshot) => {
       snapshot.docChanges().forEach((change) => {
         if (change.type === 'added') {
-          console.log('New user: ', change.doc.data())
-          users.value = [...users.value, change.doc.data()]
-          users.value = users.value.sort((a, b) => b.state - a.state)
+          console.log('Guardar mi Username como: ', change.doc.data())
+          registeredUsers.value = [...registeredUsers.value, change.doc.data()]
+          registeredUsers.value = registeredUsers.value.sort((a, b) => b.state - a.state)
         }
         if (change.type === 'modified') {
-          console.log('Modified user: ', change.doc.data())
-          users.value = users.value.map(user =>
+          registeredUsers.value = registeredUsers.value.map(user =>
             user.uid === change.doc.data().uid
               ? { ...user, state: change.doc.data().state }
               : user
           )
-          users.value = users.value.sort((a, b) => b.state - a.state)
-        }
-        if (change.type === 'removed') {
-          console.log('Removed user: ', change.doc.data())
+          registeredUsers.value = registeredUsers.value.sort((a, b) => b.state - a.state)
         }
       })
     })
 
-    return { users }
+    const getRegisteredUsersWithoutMe = computed(() => {
+      return registeredUsers.value.filter((item) => item.uid !== myUser.value.uid)
+    })
+
+    const getChatUser = (uid) => {
+      document.querySelectorAll('.user').forEach((element) => {
+        element.dataset.uid === uid
+          ? element.classList.add('selectedUser')
+          : element.classList.remove('selectedUser')
+      })
+      myUserNAME.value = registeredUsers.value.filter((item) => item.uid === myUser.value.uid)
+      selectedUserID.value = uid
+    }
+
+    return { getRegisteredUsersWithoutMe, getChatUser }
   }
 }
 </script>
 
 <style>
+body.dark-mode .offline-user {
+  color: #3b3e54;
+}
 .offline-user {
   color: #b0bacc;
 }
@@ -59,11 +78,18 @@ export default {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: 10px 0;
-  border-bottom: 1px solid #e1e1e1c7;
+  padding: 10px;
+  border-radius: 13px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: 0.3s;
 }
-body.dark-mode .user {
-  border-bottom-color: #e5e5e51f;
+.user:hover {
+  transform: translateY(-5px);
+  background-color: #293142;
+}
+.selectedUser {
+  background-color: #293142;
 }
 .user .profile img {
   box-shadow: none;
