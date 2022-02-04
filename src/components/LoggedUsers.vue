@@ -28,12 +28,12 @@ export default {
     const myUserNAME = inject('myUserNAME')
     const selectedUserID = inject('selectedUserID')
     const myUser = inject('myUser')
-    const q = query(collection(db, 'users'))
 
+    // Obtiene todos los usarios registrados
+    const q = query(collection(db, 'users'))
     onSnapshot(q, (snapshot) => {
       snapshot.docChanges().forEach((change) => {
         if (change.type === 'added') {
-          console.log('Guardar mi Username como: ', change.doc.data())
           registeredUsers.value = [...registeredUsers.value, change.doc.data()]
           registeredUsers.value = registeredUsers.value.sort((a, b) => b.state - a.state)
         }
@@ -48,17 +48,21 @@ export default {
       })
     })
 
+    // Quita al propio usuario del array de todos los usuarios
     const getRegisteredUsersWithoutMe = computed(() => {
       return registeredUsers.value.filter((item) => item.uid !== myUser.value.uid)
     })
 
+    // Al dar click a un usuario:
     const getChatUser = (uid) => {
       document.querySelectorAll('.user').forEach((element) => {
         element.dataset.uid === uid
           ? element.classList.add('selectedUser')
           : element.classList.remove('selectedUser')
       })
+      // Obtiene el nombre de tu usuario y lo guarda
       myUserNAME.value = registeredUsers.value.filter((item) => item.uid === myUser.value.uid)
+      myUserNAME.value = myUserNAME.value[0].username
       selectedUserID.value = uid
     }
 

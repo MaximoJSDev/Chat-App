@@ -5,7 +5,7 @@
         Chat App
       </h1>
       <div class="header__profile" v-if="myUser">
-        <h6 class="header__profile__title">Maximo 4ever</h6>
+        <h6 class="header__profile__title">{{myUserNAME || 'Me'}}</h6>
         <div class="btn-nav profile">
           <img src="../assets/Profile.svg" alt="Profile icon" title="Profile">
         </div>
@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  props: ['myUser']
+  props: ['myUser', 'myUserNAME']
 }
 </script>
 

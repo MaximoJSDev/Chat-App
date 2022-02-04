@@ -1,6 +1,6 @@
 <template>
-  <TheNavbar :myUser="myUser" :logout="logout" />
-  <TheHeader :myUser="myUser" />
+  <TheNavbar :myUser="myUser" />
+  <TheHeader :myUser="myUser" :myUserNAME="myUserNAME" />
   <main class="container">
     <router-view />
   </main>
@@ -8,34 +8,24 @@
 
 <script>
 import { ref, provide } from 'vue'
-import { onAuthStateChanged, signOut } from '@firebase/auth'
-import { auth, db } from './firebase'
+import { onAuthStateChanged } from '@firebase/auth'
+import { auth } from './firebase'
 import TheNavbar from './components/TheNavbar.vue'
-import { doc, updateDoc } from '@firebase/firestore'
 import TheHeader from './components/TheHeader.vue'
 export default {
   components: { TheNavbar, TheHeader },
   setup () {
     const myUser = ref(auth.currentUser)
+    const myUserNAME = ref('')
 
     // Si el estado del usuario cambia...
     onAuthStateChanged(auth, (user) => {
       myUser.value = user
     })
     provide('myUser', myUser)
+    provide('myUserNAME', myUserNAME)
 
-    const logout = async () => {
-      try {
-        await updateDoc(doc(db, 'users', myUser.value.uid), {
-          state: false
-        })
-        await signOut(auth)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-
-    return { myUser, logout }
+    return { myUser, myUserNAME }
   }
 }
 </script>
