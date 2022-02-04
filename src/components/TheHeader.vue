@@ -22,7 +22,7 @@ export default {
 
 <style>
 .header {
-  width: calc(100vw - 78px);
+  width: calc(100vw - 74px);
   height: 69px;
   background-color: #1f2633;
   color: #fff;
