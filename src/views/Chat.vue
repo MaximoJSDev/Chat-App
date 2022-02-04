@@ -36,7 +36,7 @@ import { inject, provide, ref, watch, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 import Users from '../components/Users.vue'
 import { db, timeStamp } from '../firebase'
-import { addDoc, collection, doc, onSnapshot, query } from 'firebase/firestore'
+import { addDoc, collection, doc, onSnapshot, orderBy, query } from 'firebase/firestore'
 
 export default {
   components: { Users },
@@ -61,7 +61,7 @@ export default {
 
     const getMessages = (selectedUserID) => {
       allMessages.value = []
-      const q = query(collection(db, 'chat', myUser.value.uid, selectedUserID))
+      const q = query(collection(db, 'chat', myUser.value.uid, selectedUserID), orderBy('date'))
       unsuscribe = onSnapshot(q, (snapshot) => {
         snapshot.docChanges().forEach((change) => {
           if (change.type === 'added') {
@@ -140,6 +140,7 @@ export default {
   border-radius: 30px;
   height: 100%;
   background-color: #fff;
+  overflow: hidden;
 }
 body.dark-mode .overview section {
   background-color: #1f2633;
@@ -151,14 +152,32 @@ body.dark-mode .overview section {
   min-width: 390px;
 }
 
-.contact-section {
+.contact-section.contact-section {
   flex-grow: 6;
+  padding-left: 0;
+  padding-right: 0;
+}
+.contact-section h2 {
+  padding: 0 30px;
+}
+.contact-section > div {
+  height: calc(100% - 60px);
 }
 .messages-container {
-  margin-top: 20px;
   display: flex;
   flex-direction: column;
   row-gap: 7px;
+  height: inherit;
+  overflow-y: scroll;
+  padding: 0 30px;
+}
+.messages-container::-webkit-scrollbar {
+  width: 6px;
+  background-color: #252d3c;
+}
+.messages-container::-webkit-scrollbar-thumb {
+  background: #2f3944;
+  border-radius: 10px;
 }
 .message {
   min-width: 46%;
@@ -190,8 +209,9 @@ body.dark-mode .overview section {
   align-items: center;
   justify-content: space-between;
   right: 0;
-  bottom: 30px;
-  padding: 0 30px;
+  bottom: 0;
+  padding: 0 30px 30px;
+  background-color: #1f2633;
 }
 .form-chat input {
   width: 94%;
@@ -221,6 +241,7 @@ body.dark-mode .overview section {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 30px;
 }
 .selectUser h5 {
   font-size: 35px;
