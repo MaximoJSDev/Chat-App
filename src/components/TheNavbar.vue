@@ -35,14 +35,28 @@
 </template>
 
 <script>
+import { ref } from '@vue/reactivity'
+import { watchEffect } from '@vue/runtime-core'
 export default {
   props: ['myUser', 'logout'],
   setup () {
+    const isDarkTheme = ref(true)
+
     const toggleTheme = (isDark) => {
       isDark
         ? document.body.classList.remove('dark-mode')
         : document.body.classList.add('dark-mode')
+      isDarkTheme.value = isDark
     }
+
+    if (localStorage.getItem('isDarkTheme')) {
+      isDarkTheme.value = JSON.parse(localStorage.getItem('isDarkTheme'))
+      toggleTheme(isDarkTheme.value)
+    }
+
+    watchEffect(() =>
+      localStorage.setItem('isDarkTheme', JSON.stringify(isDarkTheme.value))
+    )
 
     return { toggleTheme }
   }
