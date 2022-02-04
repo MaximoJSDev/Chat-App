@@ -39,11 +39,9 @@ export default {
   props: ['myUser', 'logout'],
   setup () {
     const toggleTheme = (isDark) => {
-      console.log(isDark)
-      if (isDark) {
-        return document.body.classList.remove('dark-mode')
-      }
-      document.body.classList.add('dark-mode')
+      isDark
+        ? document.body.classList.remove('dark-mode')
+        : document.body.classList.add('dark-mode')
     }
 
     return { toggleTheme }
