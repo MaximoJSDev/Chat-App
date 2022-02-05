@@ -137,8 +137,14 @@ export default {
   background-color: #252d3c;
 }
 .messages-container::-webkit-scrollbar-thumb {
-  background: #2f3944;
+  background-color: #2f3944;
   border-radius: 10px;
+}
+body:not(.dark-mode) .messages-container::-webkit-scrollbar {
+  background-color: #1f263363 !important;
+}
+body:not(.dark-mode) .messages-container::-webkit-scrollbar-thumb {
+  background-color: #1f263369 !important;
 }
 .message {
   min-width: 46%;
