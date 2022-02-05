@@ -64,6 +64,9 @@ export default {
       myUserNAME.value = registeredUsers.value.filter((item) => item.uid === myUser.value.uid)
       myUserNAME.value = myUserNAME.value[0].username
       selectedUserID.value = uid
+
+      // Cambiar de section (responsive < 1020)
+      document.querySelector('.users-section').classList.remove('z-index')
     }
 
     return { getRegisteredUsersWithoutMe, getChatUser }

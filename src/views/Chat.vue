@@ -1,12 +1,12 @@
 <template>
   <div class="overview">
-    <section class="users-section">
+    <section class="users-section z-index">
       <h2>Messages: </h2>
       <LoggedUsers />
     </section>
     <section class="contact-section">
       <ContactUser v-if="selectedUserID !== ''" />
-      <SelectUser />
+      <SelectUser v-else />
     </section>
   </div>
 </template>
@@ -59,5 +59,31 @@ body.dark-mode .overview section {
 }
 .users-section {
   min-width: 390px;
+}
+@media (max-width: 1200px) {
+  .overview section {
+    padding: 22px;
+  }
+  .users-section {
+    min-width: 340px;
+  }
+}
+@media (max-width: 1020px) {
+  .overview {
+    position: relative;
+  }
+  .overview section {
+    position: absolute;
+    width: 100%;
+  }
+  .users-section.z-index {
+    z-index: 1;
+  }
+  .contact-section h2, .messages-container {
+    padding: 0 18px !important;
+  }
+  .form-chat {
+    padding: 0 18px 18px;
+  }
 }
 </style>

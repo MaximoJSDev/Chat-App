@@ -1,20 +1,23 @@
 <template>
   <div ref="RefChat">
+    <header class="contact-section__header">
+      <img src="../assets/ArrowLeft.svg" alt="arrow left icon" @click="backToListUsers">
       <h2>Chat: </h2>
-      <div class="messages-container">
-          <div
-          v-for="message in allMessages"
-          :key="message.id"
-          :class="message.uid === myUser.uid ? 'message my-message' : 'message'"
-          >
-          <h3>{{message.user}}</h3>
-          <p>{{message.texto}}</p>
-          </div>
-      </div>
-      <form class="form-chat" @submit.prevent="sendMessage">
-          <input type="text" placeholder="Write a message..." v-model="messageForm">
-          <button class="form-chat__send-btn"><img src="../assets/Send.svg" alt="Send icon"></button>
-      </form>
+    </header>
+    <div class="messages-container">
+        <div
+        v-for="message in allMessages"
+        :key="message.id"
+        :class="message.uid === myUser.uid ? 'message my-message' : 'message'"
+        >
+        <h3>{{message.user}}</h3>
+        <p>{{message.texto}}</p>
+        </div>
+    </div>
+    <form class="form-chat" @submit.prevent="sendMessage">
+        <input type="text" placeholder="Write a message..." v-model="messageForm">
+        <button class="form-chat__send-btn"><img src="../assets/Send.svg" alt="Send icon"></button>
+    </form>
   </div>
 </template>
 
@@ -88,7 +91,11 @@ export default {
       }
     })
 
-    return { allMessages, RefChat, messageForm, sendMessage, myUser }
+    const backToListUsers = () => {
+      document.querySelector('.users-section').classList.add('z-index')
+    }
+
+    return { allMessages, RefChat, messageForm, sendMessage, myUser, backToListUsers }
   }
 }
 </script>
@@ -98,8 +105,21 @@ export default {
   padding-left: 0;
   padding-right: 0;
 }
-.contact-section h2 {
-  padding: 0 30px;
+.contact-section__header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 24px;
+  margin-bottom: 15px;
+}
+.contact-section__header img {
+  padding: 4px;
+  border-radius: 50%;
+  background-color: #fff;
+}
+.contact-section__header h2 {
+  margin-bottom: 0 !important;
+  padding-left: 17px;
 }
 .contact-section > div {
   height: calc(100% - 60px);

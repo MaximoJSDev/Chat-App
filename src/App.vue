@@ -106,9 +106,13 @@ body.dark-mode .max-width {
   z-index: -1;
 }
 
-@media (max-width: 840px) {
+@media (max-width: 670px) {
   .header {
     width: 100vw;
+  }
+  .header__container {
+    padding-left: 18px;
+    padding-right: 18px;
   }
   .header__title {
     font-size: 24px;
@@ -131,6 +135,11 @@ body.dark-mode .max-width {
     position: relative;
     bottom: 0;
     margin-bottom: 5px;
+  }
+}
+@media (max-width: 500px) {
+  .container {
+    padding: 10px;
   }
 }
 @import './assets/styles/Form.css';
