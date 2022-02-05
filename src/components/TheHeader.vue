@@ -2,6 +2,7 @@
   <header class="header">
     <div class="header__container">
       <h1 class="header__title">
+        <img src="../assets/Menu.svg" alt="Menu icon" class="header__img" @click="activateNav">
         Chat App
       </h1>
       <div class="header__profile" v-if="myUser">
@@ -16,7 +17,14 @@
 
 <script>
 export default {
-  props: ['myUser', 'myUserNAME']
+  props: ['myUser', 'myUserNAME'],
+  setup () {
+    const activateNav = () => {
+      document.getElementById('nav').classList.toggle('nav--active')
+    }
+
+    return { activateNav }
+  }
 }
 </script>
 
@@ -37,8 +45,16 @@ export default {
   justify-content: space-between;
   padding: 10px 40px;
 }
+.header__img {
+  height: 35px;
+  display: none;
+}
 .header__title {
   font-size: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  column-gap: 11px;
 }
 .header__profile {
   height: 49px;

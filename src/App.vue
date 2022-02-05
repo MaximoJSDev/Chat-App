@@ -108,7 +108,9 @@ body.dark-mode .max-width {
 
 @media (max-width: 670px) {
   .header {
+    position: relative;
     width: 100vw;
+    z-index: 111;
   }
   .header__container {
     padding-left: 18px;
@@ -117,8 +119,31 @@ body.dark-mode .max-width {
   .header__title {
     font-size: 24px;
   }
+  .header__img {
+    display: block;
+  }
   #nav {
-    display: none;
+    height: calc(100% - 69px);
+    position: absolute;
+    top: 69px;
+    left: 0;
+    visibility: hidden;
+  }
+  .nav__container {
+    padding-left: 8px;
+    padding-right: 8px;
+    padding: 12px 8px 25px;
+  }
+  .nav--active {
+    z-index: 11;
+    visibility: visible !important;
+  }
+  .btn-nav img {
+    height: 47px;
+    width: 47px;
+  }
+  .nav--active ~ .container {
+    opacity: 0.4;
   }
   .container {
     padding: 20px;
@@ -130,7 +155,7 @@ body.dark-mode .max-width {
   .lorem {
     font-size: 15px;
   }
-  .btn-to-chat {
+  .btn-to-chat.btn-to-chat {
     display: inline-block;
     position: relative;
     bottom: 0;
