@@ -4,14 +4,10 @@
       {{myUser ? myUser.displayName || myUser.email :'User'}}!
     </h1>
     <p class="lorem">
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non, illo.
-      Optio illum iure fuga qui ipsa itaque! Molestiae officia at minus sint corrupti dolorem.
-      Eveniet nisi maxime culpa commodi dolor. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-      Excepturi, quibusdam!
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non, illo.
-      Optio illum iure fuga qui ipsa itaque! Molestiae officia at minus sint corrupti dolorem.
-      Eveniet nisi maxime culpa commodi dolor. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-      Excepturi, quibusdam!
+      This is a real-time chat application, in which
+      you can send messages to other registered users,
+      before that, you must register and create a new account,
+      or if you already have an account, just LogIn. 👨‍💻
     </p>
     <router-link to="/chat" class="btn btn-to-chat">Go to Chats</router-link>
   </div>
@@ -34,7 +30,7 @@ export default {
   margin-bottom: 10px;
 }
 .lorem {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 300;
   margin-bottom: 35px;
   max-width: 1120px;
